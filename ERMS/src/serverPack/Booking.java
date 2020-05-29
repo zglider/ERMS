@@ -1,15 +1,17 @@
 package serverPack;
+
 import java.util.Date;
 
 public class Booking {
-	private int bookingID;
+	private String bookingID;
 	private Date from;
 	private Date to;
 	private int unitID;
 	private int venueID;
 	private float discount;
 	
-	public Booking(int bookingID, Date from, Date to, int unitID, int venueID, float discount) {
+
+	public Booking(String bookingID, Date from, Date to, int unitID, int venueID, float discount) {
 		this.bookingID = bookingID;
 		this.from = from;
 		this.to = to;
@@ -18,11 +20,12 @@ public class Booking {
 		this.discount = discount;
 	}
 
-	public int getBookingID() {
+		
+	public String getBookingID() {
 		return bookingID;
 	}
 
-	public void setBookingID(int bookingID) {
+	public void setBookingID(String bookingID) {
 		this.bookingID = bookingID;
 	}
 
@@ -69,9 +72,7 @@ public class Booking {
 	@Override
 	public String toString() {
 		return "Booking [BookingID=" + bookingID + ", From=" + from + ", To=" + to + ", UnitID=" + unitID + ", VenueID="
-				+ venueID + ", Discount=" + discount*100 + "%]";
+				+ venueID + ", Discount=" + discount * 100 + "%]";
 	}
-	
-	
 
 }

@@ -26,14 +26,12 @@ public class ServerService extends Thread {
 	public void run(){
 		Response response = null;
 		try {
-			Request request = (Request) in.readObject();
+			RequestIn request = (RequestIn) in.readObject();
 			response = request.process();
-		} catch (ClassNotFoundException | IOException e) {
-			
+		} catch (ClassNotFoundException | IOException e) {	
 			e.printStackTrace();
 			System.out.println("Debug: ServerService Run: request reception issue");
-		}
-		
+		}		
 		
 		try {
 			out.writeObject(response);
