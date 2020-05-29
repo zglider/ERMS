@@ -10,19 +10,29 @@ public class UnitList {
 	
 	public Response addUnit(Unit unitReq){
 		Response response = null;
+		boolean venueFound = false;
+		boolean full = false;
 		for (Venue venue: Server.venueList.getList()){
+			
 			if (venue.getID()==unitReq.getVenueID()){
-				if (venue.getUnits().size()<venue.getCapacity()){
-					unitList.add(unitReq);
-					return response = new Response(true, "Add unit request succeeded");
+				venueFound = true;
+				if (venue.getUnits().size()>=venue.getCapacity()){
+					full = true;
 				}
-				else{
-					return response = new Response(false, "Venue is full");
-				}
+			}
+			
+		}
+		if (venueFound){
+			if (!full){
+				unitList.add(unitReq);
+				response = new Response(true, "Add unit request succeeded");
 			}
 			else{
-				return response = new Response(false, "Venue not found");
+				response = new Response(false, "Add unit failed, venue full");
 			}
+		}
+		else{
+			response = new Response(false, "Add unit failed, venue not found");
 		}
 		return response;
 		
