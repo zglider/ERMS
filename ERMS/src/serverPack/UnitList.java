@@ -14,14 +14,14 @@ public class UnitList {
 			if (venue.getID()==unitReq.getVenueID()){
 				if (venue.getUnits().size()<venue.getCapacity()){
 					unitList.add(unitReq);
-					response = new Response(true, "Add unit request succeeded");
+					return response = new Response(true, "Add unit request succeeded");
 				}
 				else{
-					response = new Response(false, "Venue is full");
+					return response = new Response(false, "Venue is full");
 				}
 			}
 			else{
-				response = new Response(false, "Venue not found");
+				return response = new Response(false, "Venue not found");
 			}
 		}
 		return response;
@@ -33,10 +33,10 @@ public class UnitList {
 		for (Unit unit: unitList){
 			if (unit.getUnitID()==unitReq.getUnitID()){
 				unitList.set(unitList.indexOf(unit), unitReq);
-				response = new Response(true, "Unit modified successfully");
+				return response = new Response(true, "Unit modified successfully");
 			}
 			else{
-				response = new Response(false, "Unit not found");
+				return response = new Response(false, "Unit not found");
 			}
 		}
 		
@@ -49,10 +49,10 @@ public class UnitList {
 		for (Unit unit: unitList){
 			if (unit.getUnitID()==unitID){
 				unitList.remove(unit);
-				response = new Response(true, "Unit removed successfully");
+				return response = new Response(true, "Unit removed successfully");
 			}
 			else{
-				response = new Response(false, "Unit not found");
+				return response = new Response(false, "Unit not found");
 			}
 		}
 		return response;
