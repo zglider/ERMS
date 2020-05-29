@@ -6,12 +6,14 @@ import java.net.Socket;
 
 public class Server {
 	static BookingList bookingList;
+	static VenueList venueList;
 	
 	public static void main(String[] args) {
 		final int serverPort = 50005;
 		
 
 		try {
+			venueList = new VenueList();
 			bookingList = new BookingList();
 			@SuppressWarnings("resource")
 			ServerSocket serverSocket = new ServerSocket(serverPort);
