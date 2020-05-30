@@ -4,14 +4,15 @@ import java.util.Date;
 
 public class RequestIn {
 	private int operation;
-	private int venueID;
-	private int unitID;
+	private String venueID;
+	private String unitID;
 	private Date from;
 	private Date to;
 	private float discount;
 	private String bookingID;
 
-	public RequestIn(int operation, int venueID, int unitID, Date from, Date to, float discount, String bookingID) {
+	public RequestIn(int operation, String venueID, String unitID, Date from, Date to, float discount,
+			String bookingID) {
 
 		this.operation = operation;
 		this.venueID = venueID;
@@ -19,7 +20,7 @@ public class RequestIn {
 		this.from = from;
 		this.to = to;
 		this.discount = discount;
-		this.bookingID=bookingID;
+		this.bookingID = bookingID;
 	}
 
 	public int getOperation() {
@@ -30,19 +31,19 @@ public class RequestIn {
 		this.operation = operation;
 	}
 
-	public int getVenueID() {
+	public String getVenueID() {
 		return venueID;
 	}
 
-	public void setVenueID(int venueID) {
+	public void setVenueID(String venueID) {
 		this.venueID = venueID;
 	}
 
-	public int getUnitID() {
+	public String getUnitID() {
 		return unitID;
 	}
 
-	public void setUnitID(int unitID) {
+	public void setUnitID(String unitID) {
 		this.unitID = unitID;
 	}
 
@@ -80,13 +81,13 @@ public class RequestIn {
 		Response response = null;
 		switch (this.operation) {
 		case (0):
-			Booking newBooking = new Booking(this.bookingID, this.from, this.to, this.unitID,
-					this.venueID, this.discount);
+			Booking newBooking = new Booking(this.bookingID, this.from, this.to, this.unitID, this.venueID,
+					this.discount);
 			response = Server.bookingList.book(newBooking);
 			break;
 		case (1):
-			Booking modifyBooking = new Booking(this.bookingID, this.from, this.to, this.unitID,
-					this.venueID, this.discount);
+			Booking modifyBooking = new Booking(this.bookingID, this.from, this.to, this.unitID, this.venueID,
+					this.discount);
 			response = Server.bookingList.modify(modifyBooking);
 			break;
 		case (2):

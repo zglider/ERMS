@@ -43,6 +43,25 @@ public class VenueList {
 
 		return response;
 	}
+	
+	public Response removeVenue(String venueID){
+		Response response = null;
+		boolean found = false;
+		for (Venue venue: Server.venueList.getList()){
+			if (venue.getID()==venueID){
+				venueList.remove(venue);
+				found=true;
+			}
+		}
+		if (found){
+			response = new Response(true, "Found and deleted the venue");
+		}
+		else{
+			response = new Response(false, "Cannot delete, venue not found");
+		}
+		
+		return response;
+	}
 
 	public ArrayList<Venue> getList() {
 		return this.venueList;
@@ -50,5 +69,14 @@ public class VenueList {
 
 	public void setList(ArrayList<Venue> venueList) {
 		this.venueList = venueList;
+	}
+	
+	public Venue getVenueByID(String venueIDReq){
+		for(Venue venue: venueList){
+			if(venue.getID()==venueIDReq){
+				return venue;
+			}
+		}
+		return null;
 	}
 }

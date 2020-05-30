@@ -4,74 +4,94 @@ import java.util.ArrayList;
 
 public class UnitList {
 	private ArrayList<Unit> unitList;
-	public UnitList(){
+
+	public ArrayList<Unit> getUnitList() {
+		return unitList;
+	}
+
+	public void setUnitList(ArrayList<Unit> unitList) {
+		this.unitList = unitList;
+	}
+
+	public UnitList() {
 		unitList = new ArrayList<Unit>();
 	}
-	
-	public Response addUnit(Unit unitReq){
+
+	public Response addUnit(Unit unitReq) {
 		Response response = null;
 		boolean venueFound = false;
 		boolean full = false;
-		for (Venue venue: Server.venueList.getList()){
-			
-			if (venue.getID()==unitReq.getVenueID()){
+		for (Venue venue : Server.venueList.getList()) {
+
+			if (venue.getID() == unitReq.getVenueID()) {
 				venueFound = true;
-				if (venue.getUnits().size()>=venue.getCapacity()){
+				if (venue.getUnits().size() >= venue.getCapacity()) {
 					full = true;
 				}
 			}
-			
+
 		}
-		if (venueFound){
-			if (!full){
+		if (venueFound) {
+			if (!full) {
 				unitList.add(unitReq);
 				response = new Response(true, "Add unit request succeeded");
-			}
-			else{
+			} else {
 				response = new Response(false, "Add unit failed, venue full");
 			}
-		}
-		else{
+		} else {
 			response = new Response(false, "Add unit failed, venue not found");
 		}
 		return response;
-		
+
 	}
-	
-	public Response modifyUnit(Unit unitReq){
+
+	public Response modifyUnit(Unit unitReq) {
 		Response response = null;
-		for (Unit unit: unitList){
-			if (unit.getUnitID()==unitReq.getUnitID()){
+		for (Unit unit : unitList) {
+			if (unit.getUnitID() == unitReq.getUnitID()) {
 				unitList.set(unitList.indexOf(unit), unitReq);
-				return response = new Response(true, "Unit modified successfully");
-			}
-			else{
-				return response = new Response(false, "Unit not found");
+				response = new Response(true, "Unit modified successfully");
+			} else {
+				response = new Response(false, "Unit not found");
 			}
 		}
-		
-		
+
 		return response;
 	}
-	
-	public Response removeUnit(String unitID){
+
+	public Response removeUnit(String unitID) {
 		Response response = null;
-		for (Unit unit: unitList){
-			if (unit.getUnitID()==unitID){
+		for (Unit unit : unitList) {
+			if (unit.getUnitID() == unitID) {
 				unitList.remove(unit);
 				return response = new Response(true, "Unit removed successfully");
-			}
-			else{
+			} else {
 				return response = new Response(false, "Unit not found");
 			}
 		}
 		return response;
 	}
 
-	public int size() {	
+	public int size() {
 		return unitList.size();
 	}
-
-
+	
+	public String getFirstAvailable(){
+		for(Unit unit: unitList){
+			if (unit.isBooked()==false){
+				return unit.getUnitID();
+			}
+		}
+		return "No vacancy";
+	}
+	
+	public Unit getUnitByID(String unitIDReq){
+		for(Unit unit: unitList){
+			if(unit.getUnitID()==unitIDReq){
+				return unit;
+			}
+		}
+		return null;
+	}
 
 }

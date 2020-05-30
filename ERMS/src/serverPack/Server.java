@@ -3,6 +3,7 @@ package serverPack;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 import java.util.UUID;
 
 public class Server {
@@ -33,6 +34,7 @@ public class Server {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void init() {
 
 		// Initialising some avenues along with units in them
@@ -66,6 +68,14 @@ public class Server {
 		
 		System.out.println(venueList.getList().get(0).toString());
 		System.out.println(venueList.getList().get(1).toString());
+		System.out.println();
+		
+		//
+		// Booking a room in the waldorf
+		String roomToBook=venueList.getVenueByID(waldorfID).getUnits().getFirstAvailable();
+		bookingList.book(new Booking(UUID.randomUUID().toString(),new Date(2020,5,30),new Date(2020,6,6),roomToBook,waldorfID,0.2f));
+		
+		System.out.println("Room: "+roomToBook+" is booked now? "+venueList.getVenueByID(waldorfID).getUnits().getUnitByID(roomToBook).isBooked());
 		
 	}
 

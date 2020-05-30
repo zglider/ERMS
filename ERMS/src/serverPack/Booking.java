@@ -6,12 +6,12 @@ public class Booking {
 	private String bookingID;
 	private Date from;
 	private Date to;
-	private int unitID;
-	private int venueID;
+	private String unitID;
+	private String venueID;
 	private float discount;
 	
 
-	public Booking(String bookingID, Date from, Date to, int unitID, int venueID, float discount) {
+	public Booking(String bookingID, Date from, Date to, String unitID, String venueID, float discount) {
 		this.bookingID = bookingID;
 		this.from = from;
 		this.to = to;
@@ -45,19 +45,19 @@ public class Booking {
 		this.to = to;
 	}
 
-	public int getUnitID() {
+	public String getUnitID() {
 		return unitID;
 	}
 
-	public void setUnitID(int unitID) {
+	public void setUnitID(String unitID) {
 		this.unitID = unitID;
 	}
 
-	public int getVenueID() {
+	public String getVenueID() {
 		return venueID;
 	}
 
-	public void setVenueID(int venueID) {
+	public void setVenueID(String venueID) {
 		this.venueID = venueID;
 	}
 
