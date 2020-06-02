@@ -93,5 +93,13 @@ public class UnitList {
 		}
 		return null;
 	}
-
+	
+	@Override
+	public String toString(){
+		String output="";
+		for(Unit unit: unitList){
+			output+=unit.toString();
+		}
+		return output;
+	}
 }

@@ -76,5 +76,31 @@ public class BookingList {
 		}
 		return new Response(false, "booking not found");
 	}
+	
+	@Override
+	public String toString(){
+		String output="";
+		for(Booking bking:bookingList){
+			output+=bking.toString()+"\n";
+		}
+		return output;
+	}
+	
+	
+	
+	public ArrayList<Booking> getBookings() {
+		return bookingList;
+	}
+
+	public void setBookings(ArrayList<Booking> bookingList) {
+		this.bookingList = bookingList;
+	}
+
+	public Booking getBookingByID(String bookingID){
+		for(Booking bking: bookingList)
+			if (bking.getBookingID().equals(bookingID))
+				return bking;
+		return null;
+	}
 
 }

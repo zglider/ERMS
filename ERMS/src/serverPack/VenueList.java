@@ -43,23 +43,22 @@ public class VenueList {
 
 		return response;
 	}
-	
-	public Response removeVenue(String venueID){
+
+	public Response removeVenue(String venueID) {
 		Response response = null;
 		boolean found = false;
-		for (Venue venue: Server.venueList.getList()){
-			if (venue.getID()==venueID){
+		for (Venue venue : Server.venueList.getList()) {
+			if (venue.getID() == venueID) {
 				venueList.remove(venue);
-				found=true;
+				found = true;
 			}
 		}
-		if (found){
+		if (found) {
 			response = new Response(true, "Found and deleted the venue");
-		}
-		else{
+		} else {
 			response = new Response(false, "Cannot delete, venue not found");
 		}
-		
+
 		return response;
 	}
 
@@ -70,13 +69,22 @@ public class VenueList {
 	public void setList(ArrayList<Venue> venueList) {
 		this.venueList = venueList;
 	}
-	
-	public Venue getVenueByID(String venueIDReq){
-		for(Venue venue: venueList){
-			if(venue.getID()==venueIDReq){
+
+	public Venue getVenueByID(String venueIDReq) {
+		for (Venue venue : venueList) {
+			if (venue.getID() == venueIDReq) {
 				return venue;
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public String toString(){
+		String output="";
+		for (Venue ven:venueList){
+			output+= ven.toString()+"\n";
+		}
+		return output;
 	}
 }

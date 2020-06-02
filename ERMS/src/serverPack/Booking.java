@@ -4,15 +4,17 @@ import java.util.Date;
 
 public class Booking {
 	private String bookingID;
+	private String customer;
 	private Date from;
 	private Date to;
 	private String unitID;
 	private String venueID;
 	private float discount;
-	
 
-	public Booking(String bookingID, Date from, Date to, String unitID, String venueID, float discount) {
+	public Booking(String bookingID, String customer, Date from, Date to, String unitID, String venueID,
+			float discount) {
 		this.bookingID = bookingID;
+		this.customer = customer;
 		this.from = from;
 		this.to = to;
 		this.unitID = unitID;
@@ -20,7 +22,6 @@ public class Booking {
 		this.discount = discount;
 	}
 
-		
 	public String getBookingID() {
 		return bookingID;
 	}
@@ -69,9 +70,17 @@ public class Booking {
 		this.discount = discount;
 	}
 
+	public String getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+
 	@Override
 	public String toString() {
-		return "Booking [BookingID=" + bookingID + ", From=" + from + ", To=" + to + ", UnitID=" + unitID + ", VenueID="
+		return "Booking [BookingID=" + bookingID +", Customer=" + customer + ", From=" + from + ", To=" + to + ", UnitID=" + unitID + ", VenueID="
 				+ venueID + ", Discount=" + discount * 100 + "%]";
 	}
 
