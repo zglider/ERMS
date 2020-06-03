@@ -10,56 +10,37 @@ public class VenueList {
 	}
 
 	public Response addVenue(Venue venueReq) {
-		Response response = null;
-		boolean found = venueList.contains(venueReq);
-
-		if (found) {
-			response = new Response(false, "Cannot add venue, already exists");
+		if (venueList.contains(venueReq)) {
+			return new Response(false, "Cannot add venue, already exists");
 		} else {
 			venueList.add(venueReq);
-			response = new Response(true, "Venue added successfully");
+			return new Response(true, "Venue added successfully");
 		}
-
-		return response;
 	}
 
 	public Response modifyVenue(Venue venueReq) {
-		Response response = null;
-		boolean found = false;
 		for (Venue venue : Server.venueList.getList()) {
 			if (venue.getID() == venueReq.getID()) {
-				found = true;
 				venueList.set(venueList.indexOf(venue), venueReq);
+				new Response(true, "Found and modified the venue");
 			}
 		}
-
-		if (found) {
-
-			response = new Response(true, "Found and modified the venue");
-		} else {
-
-			response = new Response(false, "Cannot modify, venue not found");
-		}
-
-		return response;
+		return new Response(false, "Cannot modify, venue not found");
 	}
 
-	public Response removeVenue(String venueID) {
-		Response response = null;
-		boolean found = false;
+	public Response removeVenue(String reqVenueID) {
 		for (Venue venue : Server.venueList.getList()) {
-			if (venue.getID() == venueID) {
+			if (venue.getID() == reqVenueID) {
+				for (Unit unit : venue.getUnits().getUnitList()) {
+					if (unit.isBooked()) {
+						return new Response(false, "Cannot delete venue, one of its units is booked");
+					}
+				}
 				venueList.remove(venue);
-				found = true;
+				return new Response(true, "Found and deleted the venue");
 			}
 		}
-		if (found) {
-			response = new Response(true, "Found and deleted the venue");
-		} else {
-			response = new Response(false, "Cannot delete, venue not found");
-		}
-
-		return response;
+		return new Response(false, "Cannot delete, venue not found");
 	}
 
 	public ArrayList<Venue> getList() {
@@ -78,12 +59,12 @@ public class VenueList {
 		}
 		return null;
 	}
-	
+
 	@Override
-	public String toString(){
-		String output="";
-		for (Venue ven:venueList){
-			output+= ven.toString()+"\n";
+	public String toString() {
+		String output = "";
+		for (Venue ven : venueList) {
+			output += ven.toString() + "\n";
 		}
 		return output;
 	}

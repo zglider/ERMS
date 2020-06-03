@@ -18,87 +18,70 @@ public class UnitList {
 	}
 
 	public Response addUnit(Unit unitReq) {
-		Response response = null;
-		boolean venueFound = false;
-		boolean full = false;
 		for (Venue venue : Server.venueList.getList()) {
-
 			if (venue.getID() == unitReq.getVenueID()) {
-				venueFound = true;
 				if (venue.getUnits().size() >= venue.getCapacity()) {
-					full = true;
+					return new Response(false, "Add unit failed, venue is full");
+				} else {
+					unitList.add(unitReq);
+					return new Response(true, "Add unit request succeeded");
 				}
 			}
-
 		}
-		if (venueFound) {
-			if (!full) {
-				unitList.add(unitReq);
-				response = new Response(true, "Add unit request succeeded");
-			} else {
-				response = new Response(false, "Add unit failed, venue full");
-			}
-		} else {
-			response = new Response(false, "Add unit failed, venue not found");
-		}
-		return response;
-
+		return new Response(false, "Venue not found");
 	}
 
 	public Response modifyUnit(Unit unitReq) {
-		Response response = null;
 		for (Unit unit : unitList) {
 			if (unit.getUnitID() == unitReq.getUnitID()) {
 				unitList.set(unitList.indexOf(unit), unitReq);
-				response = new Response(true, "Unit modified successfully");
-			} else {
-				response = new Response(false, "Unit not found");
+				return new Response(true, "Unit modified successfully");
 			}
 		}
-
-		return response;
+		return new Response(false, "Unit not found");
 	}
 
 	public Response removeUnit(String unitID) {
-		Response response = null;
 		for (Unit unit : unitList) {
 			if (unit.getUnitID() == unitID) {
-				unitList.remove(unit);
-				return response = new Response(true, "Unit removed successfully");
-			} else {
-				return response = new Response(false, "Unit not found");
+				if (!unit.isBooked()) {
+					unitList.remove(unit);
+					return new Response(true, "Unit removed successfully");
+				} else {
+					return new Response(false, "Unit cannnot be removed, it's booked");
+				}
 			}
 		}
-		return response;
+		return new Response(false, "Unit not found");
 	}
 
 	public int size() {
 		return unitList.size();
 	}
-	
-	public String getFirstAvailable(){
-		for(Unit unit: unitList){
-			if (unit.isBooked()==false){
+
+	public String getFirstAvailable() {
+		for (Unit unit : unitList) {
+			if (unit.isBooked() == false) {
 				return unit.getUnitID();
 			}
 		}
 		return "No vacancy";
 	}
-	
-	public Unit getUnitByID(String unitIDReq){
-		for(Unit unit: unitList){
-			if(unit.getUnitID()==unitIDReq){
+
+	public Unit getUnitByID(String unitIDReq) {
+		for (Unit unit : unitList) {
+			if (unit.getUnitID() == unitIDReq) {
 				return unit;
 			}
 		}
 		return null;
 	}
-	
+
 	@Override
-	public String toString(){
-		String output="";
-		for(Unit unit: unitList){
-			output+=unit.toString();
+	public String toString() {
+		String output = "";
+		for (Unit unit : unitList) {
+			output += unit.toString();
 		}
 		return output;
 	}

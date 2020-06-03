@@ -6,6 +6,11 @@ import java.net.Socket;
 import java.util.Date;
 import java.util.UUID;
 
+import theater.Theater;
+import theater.TheaterSeat;
+
+//Cinema, Theater, Stadium, Flight, Hotel, Rentacar, Concert Hall, Train/ Metro, Cruise,
+
 public class Server {
 
 	static VenueList venueList;
@@ -123,7 +128,19 @@ public class Server {
 			revenue += (1.00 - booking.getDiscount()) * venueList.getVenueByID(booking.getVenueID()).getUnits()
 					.getUnitByID(booking.getUnitID()).getPrice();
 		}
-		System.out.println("Earned revenues for all units in all venues= " + ((double)((int)(revenue*100)))/100);
+		System.out.println("Earned revenues for all units in all venues= " + ((double) ((int) (revenue * 100))) / 100);
+
+		// testing physical extension of the system
+		// with a Theater inheritance of the Venue
+		// and a TheaterSeat inheritance of the Unit
+		// and showcasing the power of polymorphism in a project like ours
+		String bolshoiID = UUID.randomUUID().toString();
+		venueList.addVenue(new Theater(bolshoiID, 75, "Swan Lake", new UnitList()));
+		Venue bolshoi = venueList.getVenueByID(bolshoiID);
+		bolshoi.getUnits().addUnit(new TheaterSeat(UUID.randomUUID().toString(), bolshoiID, "Gold Section", 400, false, true));
+		
+		System.out.println(venueList.toString());
+		System.out.println(bolshoi.getUnits().toString());
 	}
 
 }

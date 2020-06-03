@@ -54,7 +54,7 @@ public class Unit {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Unit [UnitID=" + unitID + ", VenueID=" + venueID + ", Tier=" + tier + ", Price=" + price + ", Booked="
