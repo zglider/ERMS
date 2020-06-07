@@ -1,6 +1,12 @@
 package serverPack;
 
-public class Response {
+import java.io.Serializable;
+
+//this is the class to send and receive 
+//responses for requests between the clients and the server
+public class Response implements Serializable {
+	
+	private static final long serialVersionUID = 779406261798638003L;
 	private boolean success;
 	private String message;
 	

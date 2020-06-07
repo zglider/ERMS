@@ -1,18 +1,23 @@
 package serverPack;
 
-public class Venue {
+import java.io.Serializable;
+
+//this is the data strucuture class for the venues
+public class Venue implements Serializable{
+	
+	private static final long serialVersionUID = 3971103198395034887L;
 	private String ID;
 	private int capacity;
 	private String type;
 	private String instance;
 	private UnitList units;
 
-	public Venue(String ID, int capacity, String type, String instance, UnitList units) {
+	public Venue(String ID, int capacity, String type, String instance) {
 		this.ID = ID;
 		this.capacity = capacity;
 		this.type = type;
 		this.instance = instance;
-		this.units = units;
+		this.units = new UnitList();
 	}
 
 	public int getCapacity() {
@@ -23,11 +28,11 @@ public class Venue {
 		this.capacity = capacity;
 	}
 
-	public String getID() {
+	public String getVenueID() {
 		return ID;
 	}
 
-	public void setID(String ID) {
+	public void setVenueID(String ID) {
 		this.ID = ID;
 	}
 
@@ -59,6 +64,15 @@ public class Venue {
 	public String toString() {
 		return "Venue [ID=" + ID + ", Capacity=" + capacity + ", Type=" + type + ", Instance=" + instance + ", Units="
 				+ units.size() + "]";
+	}
+	
+	public double getOccupancy(){
+		int bookedUnits=0;
+		for (Unit unit: units.getUnitList()){
+			if(unit.isBooked())
+				bookedUnits++;
+		}
+		return (double)bookedUnits/(double)this.capacity;
 	}
 
 }

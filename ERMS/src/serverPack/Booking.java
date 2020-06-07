@@ -1,8 +1,12 @@
 package serverPack;
 
+import java.io.Serializable;
 import java.util.Date;
-
-public class Booking {
+//this class is for bookings
+//it is the basic data structure for them
+public class Booking implements Serializable {
+	
+	private static final long serialVersionUID = 1225036901470596856L;
 	private String bookingID;
 	private String customer;
 	private Date from;

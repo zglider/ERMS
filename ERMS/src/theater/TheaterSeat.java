@@ -1,8 +1,14 @@
 package theater;
 
+import java.io.Serializable;
+
 import serverPack.*;
 
-public class TheaterSeat extends Unit {
+//this is a unit extension
+//as an example and showcase of the extensibility of our system
+public class TheaterSeat extends Unit implements Serializable {
+	
+	private static final long serialVersionUID = 6826596810911636907L;
 	boolean wheelchairAccess = false;
 
 	public TheaterSeat(String unitID, String venueID, String tier, float price, boolean booked,

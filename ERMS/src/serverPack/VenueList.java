@@ -2,14 +2,17 @@ package serverPack;
 
 import java.util.ArrayList;
 
-public class VenueList {
+
+//this the table class for the venue data structure
+public class VenueList extends ItemList{
 	ArrayList<Venue> venueList;
 
 	public VenueList() {
 		venueList = new ArrayList<Venue>();
 	}
-
-	public Response addVenue(Venue venueReq) {
+	
+	public Response addItem(Venue venueReq) {
+		
 		if (venueList.contains(venueReq)) {
 			return new Response(false, "Cannot add venue, already exists");
 		} else {
@@ -17,20 +20,20 @@ public class VenueList {
 			return new Response(true, "Venue added successfully");
 		}
 	}
-
-	public Response modifyVenue(Venue venueReq) {
+	
+	public Response modifyItem(Venue venueReq) {
 		for (Venue venue : Server.venueList.getList()) {
-			if (venue.getID() == venueReq.getID()) {
+			if (venue.getVenueID() == venueReq.getVenueID()) {
 				venueList.set(venueList.indexOf(venue), venueReq);
 				new Response(true, "Found and modified the venue");
 			}
 		}
 		return new Response(false, "Cannot modify, venue not found");
 	}
-
-	public Response removeVenue(String reqVenueID) {
+	
+	public Response removeItem(String reqVenueID) {
 		for (Venue venue : Server.venueList.getList()) {
-			if (venue.getID() == reqVenueID) {
+			if (venue.getVenueID() == reqVenueID) {
 				for (Unit unit : venue.getUnits().getUnitList()) {
 					if (unit.isBooked()) {
 						return new Response(false, "Cannot delete venue, one of its units is booked");
@@ -53,7 +56,7 @@ public class VenueList {
 
 	public Venue getVenueByID(String venueIDReq) {
 		for (Venue venue : venueList) {
-			if (venue.getID() == venueIDReq) {
+			if (venue.getVenueID() == venueIDReq) {
 				return venue;
 			}
 		}
@@ -67,5 +70,19 @@ public class VenueList {
 			output += ven.toString() + "\n";
 		}
 		return output;
+	}
+	
+	public Response processRequest(Request req){
+		switch (req.getOperation()) {
+		case (0):
+			return addItem((Venue)req.getListItem());
+		case (1):
+			return modifyItem((Venue)req.getListItem());
+		case (2):
+			return removeItem(((Venue) (req.getListItem())).getVenueID());
+		default:
+			break;
+		}
+		return null;
 	}
 }

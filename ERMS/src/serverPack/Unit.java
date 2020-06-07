@@ -1,6 +1,11 @@
 package serverPack;
 
-public class Unit {
+import java.io.Serializable;
+
+//this is the basic data structure class for the units
+public class Unit implements Serializable{
+	
+	private static final long serialVersionUID = 5552946751922833886L;
 	private String unitID;
 	private String venueID;
 	private String tier;

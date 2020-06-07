@@ -1,8 +1,12 @@
 package serverPack;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UnitList {
+//this is the table class for the unit data structure
+public class UnitList extends ItemList implements Serializable{
+	
+	private static final long serialVersionUID = -8541998498541671889L;
 	private ArrayList<Unit> unitList;
 
 	public ArrayList<Unit> getUnitList() {
@@ -17,9 +21,9 @@ public class UnitList {
 		unitList = new ArrayList<Unit>();
 	}
 
-	public Response addUnit(Unit unitReq) {
+	public Response addItem(Unit unitReq) {
 		for (Venue venue : Server.venueList.getList()) {
-			if (venue.getID() == unitReq.getVenueID()) {
+			if (venue.getVenueID() == unitReq.getVenueID()) {
 				if (venue.getUnits().size() >= venue.getCapacity()) {
 					return new Response(false, "Add unit failed, venue is full");
 				} else {
@@ -31,7 +35,7 @@ public class UnitList {
 		return new Response(false, "Venue not found");
 	}
 
-	public Response modifyUnit(Unit unitReq) {
+	public Response modifyItem(Unit unitReq) {
 		for (Unit unit : unitList) {
 			if (unit.getUnitID() == unitReq.getUnitID()) {
 				unitList.set(unitList.indexOf(unit), unitReq);
@@ -84,5 +88,19 @@ public class UnitList {
 			output += unit.toString();
 		}
 		return output;
+	}
+	
+	public Response processRequest(Request req){
+		switch (req.getOperation()) {
+		case (0):
+			return addItem((Unit)req.getListItem());
+		case (1):
+			return modifyItem((Unit)req.getListItem());
+		case (2):
+			return removeItem(((Unit) (req.getListItem())).getUnitID());
+		default:
+			break;
+		}
+		return null;
 	}
 }
